@@ -75,6 +75,39 @@ sudo umount /dev/sdX1 2>/dev/null
 sudo mkfs.vfat -L EEROMS /dev/sdX1
 ```
 
+## Install (Windows) — ⚠️ NOT TESTED
+
+The following was not tested (no Windows machine was used to build/validate this
+image) — but the image itself is OS-agnostic raw bytes, so any raw-image writer
+should work. Feedback welcome.
+
+```powershell
+# 0. Decompress the .img.gz
+#    PowerShell 10+ ships with bsdtar, or use 7-Zip (right-click → Extract Here)
+tar -xzf r36s-ga36-a33-128GB-roms-SMALL.img.gz
+
+# 1. Identify the SD card (check the ~119 GB size — never guess the disk number)
+Get-Disk
+#    → note the DiskNumber, e.g. 2
+
+# 2. Flash with a raw-image tool, e.g.:
+#    - balenaEtcher: select the .img → select the disk → Flash
+#    - Rufus: select the .img (show "*.*" in the file filter) → GPT/MBR doesn't
+#      matter, it's a raw dd write → Start (accept the ISO-hybrid warning)
+```
+
+3. Create the FAT32 on p1 — **MANDATORY**, and this is the tricky part on
+   Windows: the ~115 GiB partition is bigger than the 32 GB limit of the native
+   Windows FAT32 formatter, so `format` / `Format-Volume` will **fail**. Use a
+   tool that supports large FAT32 volumes, e.g.:
+   - **Rufus** (it can reformat an existing large partition as FAT32), or
+   - [guiformat (FAT32 Format)](http://ridgecrop.co.uk/index.htm?guiformat.htm),
+     targeting the EEROMS partition.
+
+   Note: there is no way to skip this step — the patched initramfs mounts the
+   ROMS partition but does **not** create the filesystem, and the console cannot
+   format it itself.
+
 ## Setting up ROMs
 
 1. Insert the card into the console and boot once.
