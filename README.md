@@ -36,9 +36,29 @@ A 2.4 GB image based on the stock firmware, with two modifications:
 Note: this image does **not** contain a pre-written FAT32 filesystem (hence its
 small size and fast flash time). You must create it yourself (step 4).
 
+## Download (Releases)
+
+The GitHub **Releases** page hosts the compressed image: a single
+`r36s-ga36-a33-128GB-roms-SMALL.img.gz` file (built with `gzip -k` on macOS).
+This is the only file to download — the raw `.img` is too large to upload.
+
+Decompress it before flashing:
+
+```bash
+# macOS / Linux
+gunzip r36s-ga36-a33-128GB-roms-SMALL.img.gz
+# or, to keep the .gz:
+gzip -dk r36s-ga36-a33-128GB-roms-SMALL.img.gz
+```
+
+> On macOS, `gzip` may refuse to decompress a file whose uncompressed name
+> already exists — remove the old `.img` first, or use `gzip -dkf`.
+
 ## Install (Linux)
 
 ```bash
+# 0. Decompress the release archive (see "Download" above)
+
 # 1. Identify the SD card (check the 128G size — never guess the device name)
 lsblk -o NAME,SIZE,MODEL,RM,TRAN
 #    → typically /dev/sda (USB reader) or /dev/mmcblk0 (internal reader)
