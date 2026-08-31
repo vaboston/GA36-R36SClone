@@ -117,8 +117,8 @@ Get-Disk
    - **ROMs** → into the folders on the big EEROMS volume, e.g.
      `roms/gba/mygame.gba` (a game dropped at the partition root is invisible to
      EmulationStation).
-   - **BIOS** → on the other partition (ext4 ~1.5 GB, readable from Linux):
-     `/storage/bios/` — e.g. `gba_bios.bin` for GBA.
+   - **BIOS** → in the same folders on the big EEROMS volume, next to your
+     ROMs — e.g. `gba_bios.bin` in `roms/gba/`.
 3. Put the card back into the console and reboot.
 
 ## Technical details of the stock image
